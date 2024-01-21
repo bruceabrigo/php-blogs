@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+    www:
+        build: 
+            context: .
+            dockerfile: Dockerfile 
+        image: php:7-4-apache
+        volumes:
+            - "./:/var/www/html"
+        ports:
+            - 80:80
+            - 433:433
+    db:
+        image: mysql:latest
+        env_file:
+            - .env
+        volumes:
+            - "./db:/docker-entrypoint-initdb.d"
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - 8001:80
+        env_file:
+            - .env
+
